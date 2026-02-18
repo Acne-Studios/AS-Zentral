@@ -5,7 +5,14 @@
     "tls_privkey": "{{ file:/zentral/conf/start/docker/tls/zentral.key }}",
     "metrics_bearer_token": "CHANGE ME!!!"
   },
-  "extra_links": [],
+  "extra_links": [
+    {"anchor_text": "Prometheus",
+     "url": "https://zentral/prometheus/"},
+     {"anchor_text": "Kibana",
+     "url": "https://zentral/kibana/"},
+     {"anchor_text": "Grafana",
+     "url": "https://zentral/grafana/"}
+  ],
   "django": {
     "SECRET_KEY": "DJANGO SECRET !!! CHANGE THIS !!! DO NOT USE IN PRODUCTION !!!",
     "DEBUG": true,
@@ -35,9 +42,37 @@
     "realms": {
       "metrics": true
     },
+    "zentral.core.compliance_checks": {
+      "metrics": true
+    },
+    "zentral.core.incidents": {
+      "metrics": true
+    },
+    "zentral.core.stores": {
+      "provisioning": {
+        "stores": {
+          "elasticsearch": {
+            "admin_console": true,
+            "name": "Elasticsearch",
+            "description": "Built-in Elasticsearch event store",
+            "backend": "ELASTICSEARCH",
+            "elasticsearch_kwargs": {
+              "hosts": ["http://elastic:9200"],
+              "index": "zentral-events"
+            }
+          }
+        }
+      }
+    },
+    "zentral.core.terraform": {},
+    "zentral.contrib.inventory": {
+      "metrics": true
+    },
+    "zentral.contrib.jamf": {},
     "zentral.contrib.munki": {
       "metrics": true
     },
+    "zentral.contrib.osquery": {},
     "zentral.contrib.santa": {
       "metrics": true
     }
